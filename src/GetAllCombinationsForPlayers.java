@@ -40,7 +40,7 @@ public class GetAllCombinationsForPlayers {
         scoreMap.put("sequence",11);
 
         Map<List<String>,Integer> combinationScoreMap = new HashMap<>();
-        List<List<String>> validCombinationsList = new ArrayList<>();
+
         int[] scores = new int[3];
         for(List<String> combination: allCombinationsForPlayers){
             if(validator.checkThreeCards(combination,0,3)){
@@ -64,7 +64,7 @@ public class GetAllCombinationsForPlayers {
             if((scores[2] > scores[1] && scores[1] > scores[0]) || (scores[2] > scores[1] && scores[1] == scores[0])){
                 combinationScoreMap.put(combination,totalScores);
             }else if(scores[2] == scores[1] && scores[1] > scores[0]){
-                if(rankedMap.getOrDefault(combination.subList(8,13),0) > rankedMap.getOrDefault(combination.subList(3,8),0)){
+                if(rankedMap.getOrDefault(combination.subList(8,13),0) < rankedMap.getOrDefault(combination.subList(3,8),0)){
                     combinationScoreMap.put(combination,totalScores);
                 }
             }
