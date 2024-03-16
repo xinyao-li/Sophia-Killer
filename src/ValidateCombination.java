@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ValidateCombination {
 
@@ -14,8 +11,9 @@ public class ValidateCombination {
             Integer num = Integer.parseInt(card.substring(1));
             numList.add(num);
         }
-        return (getAllCombinationsInFiveCards.checkStraight(numList,4)
-                && getAllCombinationsInFiveCards.checkMinStraight(numList)
+        Collections.sort(numList);
+        return ((getAllCombinationsInFiveCards.checkStraight(numList,4)
+                || getAllCombinationsInFiveCards.checkMinStraight(numList))
                 && getAllCombinationsInFiveCards.checkFlush(fiveCardList));
     }
 
@@ -26,8 +24,9 @@ public class ValidateCombination {
             Integer num = Integer.parseInt(card.substring(1));
             numList.add(num);
         }
+        Collections.sort(numList);
         return (getAllCombinationsInFiveCards.checkStraight(numList,4)
-                && getAllCombinationsInFiveCards.checkMinStraight(numList));
+                || getAllCombinationsInFiveCards.checkMinStraight(numList));
     }
 
     public boolean checkFlush(List<String> combination,int start, int end){
