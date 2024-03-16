@@ -62,7 +62,8 @@ public class ValidateCombination {
             Integer num = Integer.parseInt(card.substring(1));
             numFreqMap.put(num,numFreqMap.getOrDefault(num,0) + 1);
         }
-        return numFreqMap.size() == 3 && (numFreqMap.containsValue(3)) && (numFreqMap.containsValue(1));
+        return end - start == 5?numFreqMap.size() == 3 && (numFreqMap.containsValue(3)) && (numFreqMap.containsValue(1))
+                :numFreqMap.size() == 1 && (numFreqMap.containsValue(3));
     }
 
     public boolean checkTwoPairs(List<String> combination,int start, int end){
@@ -82,6 +83,8 @@ public class ValidateCombination {
             Integer num = Integer.parseInt(card.substring(1));
             numFreqMap.put(num,numFreqMap.getOrDefault(num,0) + 1);
         }
-        return numFreqMap.size() == 4 && (numFreqMap.containsValue(2)) && (numFreqMap.containsValue(1));
+
+        return end - start == 5?numFreqMap.size() == 4 && (numFreqMap.containsValue(2)) && (numFreqMap.containsValue(1))
+                :numFreqMap.size() == 2 && (numFreqMap.containsValue(2)) && (numFreqMap.containsValue(1));
     }
 }

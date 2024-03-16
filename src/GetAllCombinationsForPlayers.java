@@ -51,22 +51,24 @@ public class GetAllCombinationsForPlayers {
             impScoreMapInFiveCards(validator,scoreMap,scores,combination,3,8,1);
             impScoreMapInFiveCards(validator,scoreMap,scores,combination,8,13,2);
 
+            //Add additional scores for first layer if it's pair or three
             int totalScores = 0;
             if(scores[0] == 1){
-                totalScores++;
-            }else if(scores[0] == 3){
                 totalScores += 2;
+            }else if(scores[0] == 3){
+                totalScores += 3;
             }
+
             totalScores += scores[2] + scores[1] +scores[0];
             if((scores[2] > scores[1] && scores[1] > scores[0]) || (scores[2] > scores[1] && scores[1] == scores[0])){
                 combinationScoreMap.put(combination,totalScores);
             }else if(scores[2] == scores[1] && scores[1] > scores[0]){
-                if(rankedMap.getOrDefault(combination.subList(8,13),100) > rankedMap.getOrDefault(combination.subList(3,8),100)){
+                if(rankedMap.getOrDefault(combination.subList(8,13),0) > rankedMap.getOrDefault(combination.subList(3,8),0)){
                     combinationScoreMap.put(combination,totalScores);
                 }
             }
+            scores = new int[3];
         }
-
         Comparator<List<String>> compareCombination = new Comparator<>() {
             @Override
             public int compare(List<String> o1, List<String> o2) {
