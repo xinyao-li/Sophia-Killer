@@ -12,7 +12,6 @@ public class BackendTest {
         String[] deck6 = new String[]{"s14","s10","s8","s3","s2","s6","h2","h9","h6","c9","d9","d12","c12"};
         String[] deck7 = new String[]{"s14","s10","s9","s3","s2","s6","h14","h9","h6","c9","d9","d14","c12"};
         String[] deck8 = new String[]{"d3","s11","s4","c12","d12","d9","d2","s8","c3","c8","c4","c6","c14"};
-        String[] deck9 = new String[]{"c10","c3","c7","c11","c14","h14","c14","s6","c6","d3","h7","s5","d12"}; // bug
 
         TopNCombination topNCombination = new TopNCombination(deck8);
         topNCombination.printTopNCombination(10);

@@ -23,7 +23,7 @@ public class PokerDeckGUI {
     public PokerDeckGUI() {
         // Initialize the winodw
         this.deck = new String[13];
-        frame = new JFrame("Poker Decks");
+        frame = new JFrame("Sophia Killer");
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         frame.setSize(800, 600);
 
