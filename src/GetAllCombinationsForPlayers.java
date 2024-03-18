@@ -48,9 +48,12 @@ public class GetAllCombinationsForPlayers {
             }else if(validator.checkOnePair(combination,0,3)){
                 scores[0] = scoreMap.get("pairOne");
             }
-
-            impScoreMapInFiveCards(validator,scoreMap,scores,combination,3,8,1);
-            impScoreMapInFiveCards(validator,scoreMap,scores,combination,8,13,2);
+            try {
+                impScoreMapInFiveCards(validator, scoreMap, scores, combination, 3, 8, 1);
+                impScoreMapInFiveCards(validator, scoreMap, scores, combination, 8, 13, 2);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 
             //Add additional scores for first layer if it's pair or three
             int totalScores = 0;

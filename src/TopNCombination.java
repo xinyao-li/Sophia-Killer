@@ -10,6 +10,11 @@ public class TopNCombination {
         this.getAllCombinationsForPlayers = new GetAllCombinationsForPlayers(deck);
     }
 
+    public List<String> getTopRankedCombination(){
+        List<List<String>> allCombinationsForPlayerList = getAllCombinationsForPlayers.getAllCombinationsForPlayers();
+        List<List<String>> rankedCombinations = getAllCombinationsForPlayers.getRankedValidCombinationsForPlayers(allCombinationsForPlayerList);
+        return rankedCombinations.get(0);
+    }
     public void printTopNCombination(int top){
         List<List<String>> allCombinationsForPlayerList = getAllCombinationsForPlayers.getAllCombinationsForPlayers();
         List<List<String>> rankedCombinations = getAllCombinationsForPlayers.getRankedValidCombinationsForPlayers(allCombinationsForPlayerList);
