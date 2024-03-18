@@ -115,10 +115,22 @@ public class PokerDeckGUI {
 
     private Map<String,String> getSymbolMap(){
         Map<String,String> symbolMap = new HashMap<>();
+        symbolMap.put("h","♥");
+        symbolMap.put("d","♦");
+        symbolMap.put("c","♣");
+        symbolMap.put("s","♠");
+        symbolMap.put("♥","h");
+        symbolMap.put("♦","d");
+        symbolMap.put("♣","c");
+        symbolMap.put("♠","s");
         symbolMap.put("A","14");
         symbolMap.put("J","11");
         symbolMap.put("Q","12");
         symbolMap.put("K","13");
+        symbolMap.put("14","A");
+        symbolMap.put("11","J");
+        symbolMap.put("12","Q");
+        symbolMap.put("13","K");
         symbolMap.put("10","10");
         symbolMap.put("9","9");
         symbolMap.put("8","8");
@@ -140,19 +152,7 @@ public class PokerDeckGUI {
                 selectedCard[0] = "-1";
                 break;
             }
-            if(deck[i].contains("♥")){
-                card += "h";
-            }
-            else if(deck[i].contains("♦")){
-                card += "d";
-            }
-            else if(deck[i].contains("♣")){
-                card += "c";
-            }
-            else if(deck[i].contains("♠")){
-                card += "s";
-            }
-            card+= symbolMap.get(deck[i].substring(1));
+            card += symbolMap.get(""+deck[i].charAt(0)) + symbolMap.get(deck[i].substring(1));
             selectedCard[i] = card;
         }
         return selectedCard;
@@ -161,33 +161,13 @@ public class PokerDeckGUI {
     private void updateSecondDeck(List<String> combination) {
         panel2.removeAll();
         List<String> combinationInUI = new ArrayList<>();
+        Map<String,String> symbolMap = getSymbolMap();
         if(combination == null){
             combinationInUI.add("Invalid Input. Please don't use duplicate cards");
         }
         else {
             for (String card : combination) {
-                String tempCard = "";
-                if (card.contains("h")) {
-                    tempCard += "♥";
-                } else if (card.contains("d")) {
-                    tempCard += "♦";
-                } else if (card.contains("c")) {
-                    tempCard += "♣";
-                } else if (card.contains("s")) {
-                    tempCard += "♠";
-                }
-                if (card.contains("11")) {
-                    tempCard += "J";
-                } else if (card.contains("12")) {
-                    tempCard += "Q";
-
-                } else if (card.contains("13")) {
-                    tempCard += "K";
-                } else if (card.contains("14")) {
-                    tempCard += "A";
-                } else {
-                    tempCard += card.substring(1);
-                }
+                String tempCard = symbolMap.get(""+card.charAt(0)) + symbolMap.get(card.substring(1));
                 combinationInUI.add(tempCard);
             }
         }
