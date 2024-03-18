@@ -1,6 +1,4 @@
 import javax.swing.*;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,7 +88,7 @@ public class PokerDeckGUI {
             // Call getTopRankedCombination() and update the second deck
             String[] selectedCard = convertDeck(deck);
             List<String> combinations = null;
-            if(!selectedCard[0].equals("-1")) {
+            if(!selectedCard[0].equals("empty")) {
                 TopNCombination topNCombination = new TopNCombination(selectedCard);
                 try {
                     combinations = topNCombination.getTopRankedCombination();
@@ -149,7 +147,7 @@ public class PokerDeckGUI {
         for(int i = 0; i < deck.length;i++){
             String card = "";
             if(deck[i] == null){
-                selectedCard[0] = "-1";
+                selectedCard[0] = "empty";
                 break;
             }
             card += symbolMap.get(""+deck[i].charAt(0)) + symbolMap.get(deck[i].substring(1));
