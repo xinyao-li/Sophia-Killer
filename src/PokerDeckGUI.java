@@ -46,7 +46,18 @@ public class PokerDeckGUI {
                     JComboBox<String> valueComboBox = new JComboBox<>(
                             new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"});
                     JComboBox<String> suitComboBox = new JComboBox<>(
-                            new String[]{"♥️", "♦️", "♣️", "♠️"});
+                            new String[]{"♥", "♦", "♣", "♠"});
+
+                    suitComboBox.setRenderer(new DefaultListCellRenderer() {
+                        @Override
+                        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                            if ("♥".equals(value) || "♦".equals(value)) {
+                                label.setText("<html><font color='red'>" + value + "</font></html>");
+                            }
+                            return label;
+                        }
+                    });
 
                     cardSelectionPanel.add(new JLabel("Value:"));
                     cardSelectionPanel.add(valueComboBox);
@@ -59,7 +70,13 @@ public class PokerDeckGUI {
                     if (result == JOptionPane.OK_OPTION) {
                         String cardValue = (String) valueComboBox.getSelectedItem();
                         String cardSuit = (String) suitComboBox.getSelectedItem();
-                        button.setText(cardSuit + "" + cardValue);
+                        if(cardSuit.contains("♥") || cardSuit.contains("♦")){
+                            String buttonText = "<html><font color='red'>" + cardSuit + "" + cardValue + "</font></html>";
+                            button.setText(buttonText);
+                        }else {
+                            button.setText(cardSuit + "" + cardValue);
+                            button.setIcon(null);
+                        }
                         deck[index] = cardSuit + "" + cardValue;
                     }
                 }
@@ -72,12 +89,19 @@ public class PokerDeckGUI {
         executeButton.addActionListener(e -> {
             // Call getTopRankedCombination() and update the second deck
             String[] selectedCard = convertDeck(deck);
-            TopNCombination topNCombination = new TopNCombination(selectedCard);
-            List<String> combinations = topNCombination.getTopRankedCombination();
+            List<String> combinations = null;
+            if(!selectedCard[0].equals("-1")) {
+                TopNCombination topNCombination = new TopNCombination(selectedCard);
+                try {
+                    combinations = topNCombination.getTopRankedCombination();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
-            // Assume we only present 1 combination
-            if (!combinations.isEmpty()) {
-                updateSecondDeck(combinations);
+                // Assume we only present 1 combination
+                if (combinations == null || !combinations.isEmpty()) {
+                    updateSecondDeck(combinations);
+                }
             }
         });
         frame.add(panel1);
@@ -112,19 +136,23 @@ public class PokerDeckGUI {
         Map<String,String> symbolMap = getSymbolMap();
         for(int i = 0; i < deck.length;i++){
             String card = "";
-            if(deck[i].contains("♥️")){
+            if(deck[i] == null){
+                selectedCard[0] = "-1";
+                break;
+            }
+            if(deck[i].contains("♥")){
                 card += "h";
             }
-            else if(deck[i].contains("♦️")){
+            else if(deck[i].contains("♦")){
                 card += "d";
             }
-            else if(deck[i].contains("♣️")){
+            else if(deck[i].contains("♣")){
                 card += "c";
             }
-            else if(deck[i].contains("♠️")){
+            else if(deck[i].contains("♠")){
                 card += "s";
             }
-            card+= symbolMap.get(deck[i].substring(2));
+            card+= symbolMap.get(deck[i].substring(1));
             selectedCard[i] = card;
         }
         return selectedCard;
@@ -133,35 +161,42 @@ public class PokerDeckGUI {
     private void updateSecondDeck(List<String> combination) {
         panel2.removeAll();
         List<String> combinationInUI = new ArrayList<>();
-        for(String card: combination){
-            String tempCard = "";
-            if(card.contains("h")){
-                tempCard += "♥️";
+        if(combination == null){
+            combinationInUI.add("Invalid Input. Please don't use duplicate cards");
+        }
+        else {
+            for (String card : combination) {
+                String tempCard = "";
+                if (card.contains("h")) {
+                    tempCard += "♥";
+                } else if (card.contains("d")) {
+                    tempCard += "♦";
+                } else if (card.contains("c")) {
+                    tempCard += "♣";
+                } else if (card.contains("s")) {
+                    tempCard += "♠";
+                }
+                if (card.contains("11")) {
+                    tempCard += "J";
+                } else if (card.contains("12")) {
+                    tempCard += "Q";
+
+                } else if (card.contains("13")) {
+                    tempCard += "K";
+                } else if (card.contains("14")) {
+                    tempCard += "A";
+                } else {
+                    tempCard += card.substring(1);
+                }
+                combinationInUI.add(tempCard);
             }
-            else if(card.contains("d")){
-                tempCard += "♦️";
-            }
-            else if(card.contains("c")){
-                tempCard += "♣️";
-            }
-            else if(card.contains("s")){
-                tempCard += "♠️";
-            }
-            if(card.contains("J")){
-                tempCard += 11;
-            }else if(card.contains("Q")){
-                tempCard += 12;
-            }else if(card.contains("K")){
-                tempCard += 13;
-            }else if(card.contains("A")){
-                tempCard += 14;
-            }else{
-                tempCard += card.substring(1);
-            }
-            combinationInUI.add(tempCard);
         }
         for (String card : combinationInUI) {
-            panel2.add(new JLabel(card));
+            if(card.contains("♥") || card.contains("♦")){
+                panel2.add(new JLabel("<html><font color='red'>" + card + "</font></html>"));
+            }else {
+                panel2.add(new JLabel(card));
+            }
         }
         panel2.revalidate();
         panel2.repaint();
