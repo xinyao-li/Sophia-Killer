@@ -7,18 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PokerDeckGUI {
+public class SophiaKillerGUI {
     private JFrame frame;
     private JPanel panel1;
 
     private JPanel panel2;
-    private List<JButton> cardButtons;
 
     private JButton executeButton;
 
     public String[] deck;
 
-    public PokerDeckGUI() {
+    public SophiaKillerGUI() {
         // Initialize the winodw
         this.deck = new String[13];
         frame = new JFrame("Sophia Killer");
@@ -31,7 +30,7 @@ public class PokerDeckGUI {
         panel2.setPreferredSize(new Dimension(frame.getWidth(), 100));
 
         // Initialize the card list
-        cardButtons = new ArrayList<>();
+        List<JButton> cardButtons = new ArrayList<>();
 
         for (int i = 0; i < 13; i++) {
             JButton button = new JButton("Empty");
@@ -181,6 +180,6 @@ public class PokerDeckGUI {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new PokerDeckGUI());
+        SwingUtilities.invokeLater(SophiaKillerGUI::new);
     }
 }
