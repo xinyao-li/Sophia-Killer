@@ -53,7 +53,6 @@ class GetAllCombinationsInFiveCards {
         }
 
         //Add two pairs
-
         List<List<String>> twoPairsList = createTwoPairsList(allCombinations);
         rankedTwoPairsList(twoPairsList);
 
