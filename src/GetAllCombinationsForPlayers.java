@@ -1,18 +1,6 @@
 import java.util.*;
 
 public class GetAllCombinationsForPlayers {
-    /***
-     random:    0 point
-     pairOne:   1 point
-     pairTwo:   2 points
-     three:     3 points
-     straight:  4 points
-     flush:     5 points
-     fullHouse: 6 points
-     bomb:      10 points
-     sequence:  11 points
-     ***/
-    private final GetAllCombinationsInFiveCards getAllCombinationsInFiveCards = new GetAllCombinationsInFiveCards();
     private final Map<List<String>,Integer> rankedMap;
 
     private final List<List<String>> fiveCardsCombinationRankedLists;
@@ -21,6 +9,7 @@ public class GetAllCombinationsForPlayers {
     public GetAllCombinationsForPlayers(String[] deck){
         this.deck = deck;
         rankedMap = new HashMap<>();
+        GetAllCombinationsInFiveCards getAllCombinationsInFiveCards = new GetAllCombinationsInFiveCards();
         fiveCardsCombinationRankedLists = getAllCombinationsInFiveCards.rankCombinationInFiveCards(deck);
         for(int i = 0; i < fiveCardsCombinationRankedLists.size();i++){
             rankedMap.put(fiveCardsCombinationRankedLists.get(i),i);
@@ -70,14 +59,9 @@ public class GetAllCombinationsForPlayers {
             }
             scores = new int[3];
         }
-        Comparator<List<String>> compareCombination = new Comparator<>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                return combinationScoreMap.getOrDefault(o2,0) - combinationScoreMap.getOrDefault(o1,0);
-            }
-        };
+        Comparator<List<String>> compareCombination = (o1, o2) -> combinationScoreMap.getOrDefault(o2,0) - combinationScoreMap.getOrDefault(o1,0);
 
-        Collections.sort(allCombinationsForPlayers,compareCombination);
+        allCombinationsForPlayers.sort(compareCombination);
         return allCombinationsForPlayers;
     }
 
@@ -111,8 +95,7 @@ public class GetAllCombinationsForPlayers {
         List<List<String>> allCombinationsForPlayers = new ArrayList<>();
         for(int i = 0; i < this.fiveCardsCombinationRankedLists.size();i++){
             List<String> fiveCardsCombinationRankedList = this.fiveCardsCombinationRankedLists.get(i);
-            Set<String> cardSet = new HashSet<>();
-            cardSet.addAll(fiveCardsCombinationRankedList);
+            Set<String> cardSet = new HashSet<>(fiveCardsCombinationRankedList);
             for(int j = i + 1; j < this.fiveCardsCombinationRankedLists.size();j++){
                 List<String> combination = new ArrayList<>();
                 if(hasNoDuplicatedCard(cardSet,this.fiveCardsCombinationRankedLists.get(j))){
@@ -138,8 +121,7 @@ public class GetAllCombinationsForPlayers {
 
     public List<String> getThreeCardsList(Set<String> cardSet, List<String> cardList, String[] deck){
         List<String> threeCardsList = new ArrayList<>();
-        Set<String> cardSet2 = new HashSet<>();
-        cardSet2.addAll(cardList);
+        Set<String> cardSet2 = new HashSet<>(cardList);
         for(String card: deck){
             if(!cardSet.contains(card) && !cardSet2.contains(card)){
                 threeCardsList.add(card);

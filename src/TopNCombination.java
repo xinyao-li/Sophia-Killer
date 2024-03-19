@@ -2,11 +2,9 @@ import java.util.List;
 
 public class TopNCombination {
 
-    private final String[] deck;
     private final GetAllCombinationsForPlayers getAllCombinationsForPlayers;
 
     public TopNCombination(String[] deck){
-        this.deck = deck;
         this.getAllCombinationsForPlayers = new GetAllCombinationsForPlayers(deck);
     }
 

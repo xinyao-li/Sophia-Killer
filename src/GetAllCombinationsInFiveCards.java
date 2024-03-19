@@ -83,32 +83,29 @@ class GetAllCombinationsInFiveCards {
     }
 
     public void rankedRandomDeck(List<List<String>> randomList){
-        Comparator<List<String>> compareRandomList = new Comparator<>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                List<Integer> numList1 = new ArrayList<>();
-                List<Integer> numList2 = new ArrayList<>();
+        Comparator<List<String>> compareRandomList = (o1, o2) -> {
+            List<Integer> numList1 = new ArrayList<>();
+            List<Integer> numList2 = new ArrayList<>();
 
-                for (int i = 0; i < o1.size(); i++) {
-                    numList1.add(Integer.parseInt(o1.get(i).substring(1)));
-                    numList2.add(Integer.parseInt(o2.get(i).substring(1)));
-                }
-
-                Collections.sort(numList1);
-                Collections.sort(numList2);
-
-                for (int i = numList1.size() - 1; i >= 0; i--) {
-                    int result = Integer.compare(numList2.get(i), numList1.get(i));
-                    if (result != 0) {
-                        return result;
-                    }
-                }
-
-                return 0;
+            for (int i = 0; i < o1.size(); i++) {
+                numList1.add(Integer.parseInt(o1.get(i).substring(1)));
+                numList2.add(Integer.parseInt(o2.get(i).substring(1)));
             }
+
+            Collections.sort(numList1);
+            Collections.sort(numList2);
+
+            for (int i = numList1.size() - 1; i >= 0; i--) {
+                int result = Integer.compare(numList2.get(i), numList1.get(i));
+                if (result != 0) {
+                    return result;
+                }
+            }
+
+            return 0;
         };
 
-        Collections.sort(randomList,compareRandomList);
+        randomList.sort(compareRandomList);
     }
 
     public List<List<String>> getRandomDeck(List<List<String>> allCombinations){
@@ -165,37 +162,34 @@ class GetAllCombinationsInFiveCards {
 
             sortedCardInNum.add(new ArrayList<>(tempList));
         }
-        Comparator<List<String>> comparePair = new Comparator<List<String>>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                List<Integer> list1 = sortedCardInNum.get(pairListIndexMap.get(o1));
-                List<Integer> list2 = sortedCardInNum.get(pairListIndexMap.get(o2));
+        Comparator<List<String>> comparePair = (o1, o2) -> {
+            List<Integer> list1 = sortedCardInNum.get(pairListIndexMap.get(o1));
+            List<Integer> list2 = sortedCardInNum.get(pairListIndexMap.get(o2));
 
-                if(list1.get(3) > list2.get(3)){
-                    return -1;
-                }else if(list1.get(3) < list2.get(3)){
-                    return 1;
-                }
-                if(list1.get(2) > list2.get(2)){
-                    return -1;
-                }else if(list1.get(2) < list2.get(2)){
-                    return 1;
-                }
-                if(list1.get(1) > list2.get(1)){
-                    return -1;
-                }else if(list1.get(1) < list2.get(1)){
-                    return 1;
-                }
-                if(list1.get(0) > list2.get(0)){
-                    return -1;
-                }else if(list1.get(0) < list2.get(0)){
-                    return 1;
-                }
-                return 0;
+            if(list1.get(3) > list2.get(3)){
+                return -1;
+            }else if(list1.get(3) < list2.get(3)){
+                return 1;
             }
+            if(list1.get(2) > list2.get(2)){
+                return -1;
+            }else if(list1.get(2) < list2.get(2)){
+                return 1;
+            }
+            if(list1.get(1) > list2.get(1)){
+                return -1;
+            }else if(list1.get(1) < list2.get(1)){
+                return 1;
+            }
+            if(list1.get(0) > list2.get(0)){
+                return -1;
+            }else if(list1.get(0) < list2.get(0)){
+                return 1;
+            }
+            return 0;
         };
 
-        Collections.sort(onePairList,comparePair);
+        onePairList.sort(comparePair);
     }
     public void rankedTwoPairsList(List<List<String>> twoPairsList){
         List<Map<Integer,Integer>> numberList = new ArrayList<>();
@@ -216,31 +210,28 @@ class GetAllCombinationsInFiveCards {
             sortedCardInNum.add(new ArrayList<>(tempList));
         }
 
-        Comparator<List<String>> comparePairs = new Comparator<>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                List<Integer> list1 = sortedCardInNum.get(pairListIndexMap.get(o1));
-                List<Integer> list2 = sortedCardInNum.get(pairListIndexMap.get(o2));
-                if(list1.get(2) > list2.get(2)){
-                    return -1;
-                }else if(list1.get(2) < list2.get(2)){
-                    return 1;
-                }
-                if(list1.get(1) > list2.get(1)){
-                    return -1;
-                }else if(list1.get(1) < list2.get(1)){
-                    return 1;
-                }
-                if(list1.get(0) > list2.get(0)){
-                    return -1;
-                }else if(list1.get(0) < list2.get(0)) {
-                    return 1;
-                }
-
-                return 0;
+        Comparator<List<String>> comparePairs = (o1, o2) -> {
+            List<Integer> list1 = sortedCardInNum.get(pairListIndexMap.get(o1));
+            List<Integer> list2 = sortedCardInNum.get(pairListIndexMap.get(o2));
+            if(list1.get(2) > list2.get(2)){
+                return -1;
+            }else if(list1.get(2) < list2.get(2)){
+                return 1;
             }
+            if(list1.get(1) > list2.get(1)){
+                return -1;
+            }else if(list1.get(1) < list2.get(1)){
+                return 1;
+            }
+            if(list1.get(0) > list2.get(0)){
+                return -1;
+            }else if(list1.get(0) < list2.get(0)) {
+                return 1;
+            }
+
+            return 0;
         };
-        Collections.sort(twoPairsList,comparePairs);
+        twoPairsList.sort(comparePairs);
     }
     public List<Map<Integer,Integer>> generateSortedCard(List<Map<Integer,Integer>> numberList){
         List<Map<Integer,Integer>> sortedNumberList = new ArrayList<>();
@@ -345,31 +336,28 @@ class GetAllCombinationsInFiveCards {
             sortedCardInNum.add(new ArrayList<>(tempList));
         }
 
-        Comparator<List<String>> compareThree = new Comparator<>() {
-            @Override
-            public int compare(List<String> o1, List<String> o2) {
-                List<Integer> list1 = sortedCardInNum.get(threeListIndexMap.get(o1));
-                List<Integer> list2 = sortedCardInNum.get(threeListIndexMap.get(o2));
-                if(list1.get(2) > list2.get(2)){
-                    return -1;
-                }else if(list1.get(2) < list2.get(2)){
-                    return 1;
-                }
-                if(list1.get(1) > list2.get(1)){
-                    return -1;
-                }else if(list1.get(1) < list2.get(1)){
-                    return 1;
-                }
-                if(list1.get(0) > list2.get(0)){
-                    return -1;
-                }else if(list1.get(0) < list2.get(0)) {
-                    return 1;
-                }
-
-                return 0;
+        Comparator<List<String>> compareThree = (o1, o2) -> {
+            List<Integer> list1 = sortedCardInNum.get(threeListIndexMap.get(o1));
+            List<Integer> list2 = sortedCardInNum.get(threeListIndexMap.get(o2));
+            if(list1.get(2) > list2.get(2)){
+                return -1;
+            }else if(list1.get(2) < list2.get(2)){
+                return 1;
             }
+            if(list1.get(1) > list2.get(1)){
+                return -1;
+            }else if(list1.get(1) < list2.get(1)){
+                return 1;
+            }
+            if(list1.get(0) > list2.get(0)){
+                return -1;
+            }else if(list1.get(0) < list2.get(0)) {
+                return 1;
+            }
+
+            return 0;
         };
-        Collections.sort(threeWithoutPairList,compareThree);
+        threeWithoutPairList.sort(compareThree);
         return threeWithoutPairList;
     }
     public void addStraightInRankedList(List<Integer> numberByKey,Map<Integer,List<String>> numberMap,List<List<String>> rankedList){
@@ -403,9 +391,7 @@ class GetAllCombinationsInFiveCards {
         for(List<Integer> dec: straightComb){
             List<String> straightCardComb = new ArrayList<>();
             for(Integer num: dec){
-                for(String cardStr: numberMap.get(num)) {
-                    straightCardComb.add(cardStr);
-                }
+                straightCardComb.addAll(numberMap.get(num));
             }
             List<List<String>> allCombinations = new ArrayList<>();
             List<String> oneCombination = new ArrayList<>();
@@ -434,15 +420,15 @@ class GetAllCombinationsInFiveCards {
         return numberSet.size() != oneCombination.size();
     }
     public void colorMapAndNumberImp(Map<Character, List<Integer>> colorMap, List<Integer> numbers,String[] deck){
-        for (int i = 0; i < deck.length; i++) {
-            if (colorMap.containsKey(deck[i].charAt(0))) {
-                colorMap.get(deck[i].charAt(0)).add(Integer.parseInt(deck[i].substring(1)));
+        for (String s : deck) {
+            if (colorMap.containsKey(s.charAt(0))) {
+                colorMap.get(s.charAt(0)).add(Integer.parseInt(s.substring(1)));
             } else {
                 List<Integer> list = new ArrayList<>();
-                list.add(Integer.parseInt(deck[i].substring(1)));
-                colorMap.put(deck[i].charAt(0), new ArrayList<>(list));
+                list.add(Integer.parseInt(s.substring(1)));
+                colorMap.put(s.charAt(0), new ArrayList<>(list));
             }
-            numbers.add(Integer.parseInt(deck[i].substring(1)));
+            numbers.add(Integer.parseInt(s.substring(1)));
         }
     }
     public void numberMapImp(Map<Integer,List<String>> numberMap,List<Integer> numbers,String[] deck){
@@ -491,10 +477,7 @@ class GetAllCombinationsInFiveCards {
         for(Integer num: numberByKey){
             List<String> cards = numberMap.get(num);
             if(cards.size() == 4){
-                List<String> comb = new ArrayList<>();
-                for(String card: cards){
-                    comb.add(card);
-                }
+                List<String> comb = new ArrayList<>(cards);
                 for(Integer num2: numberByKey){
                     if(!num2.equals(num)){
                         for(String card:numberMap.get(num2)){
